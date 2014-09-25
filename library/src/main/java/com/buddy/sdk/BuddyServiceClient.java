@@ -271,7 +271,13 @@ class BuddyServiceClient {
     }
 
 
-    private <T> BuddyFuture<BuddyResult<T>> makeRequestCore(String verb, String path, final String accessToken, final Map<String,Object> parameters, final BuddyCallback<T> callback, final Class<T> clazz) {
+    private <T> BuddyFuture<BuddyResult<T>> makeRequestCore(String verb, String path, final String accessToken, Map<String,Object> callParams, final BuddyCallback<T> callback, final Class<T> clazz) {
+
+        if (callParams == null) {
+            callParams = new HashMap<String, Object>();
+        }
+        final Map<String,Object> parameters = callParams;
+
         List<Header> headerList = new ArrayList<Header>();
         String root = _parent.getServiceRoot();
 
@@ -361,6 +367,9 @@ class BuddyServiceClient {
         else if (accessToken != null) {
             headerList.add(new BasicHeader("Authorization", String.format("Buddy %s",accessToken)));
         }
+
+
+        this._parent.setDefaultParameters(parameters);
 
         Header[] headers = headerList.toArray(new Header[0]);
 

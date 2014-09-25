@@ -79,10 +79,10 @@ class BuddyClientImpl implements BuddyClient {
         return lastLocation;
     }
 
-    private void setDefaultParameters(Map<String,Object> parameters) {
+    void setDefaultParameters(Map<String,Object> parameters) {
 
         if (lastLocation != null && !parameters.containsKey("location")) {
-            parameters.put("location", String.format("%s,%s", lastLocation.getLatitude(), lastLocation.getLongitude()));
+            parameters.put("location", lastLocation);
         }
     }
 
@@ -434,7 +434,7 @@ class BuddyClientImpl implements BuddyClient {
     public Future<BuddyResult<TimedMetric>> recordMetricEvent(String eventName, Map<String,Object> values, final int timeoutInSeconds, final BuddyCallback<TimedMetric> callback) {
         Map<String, Object> parameters = new HashMap<String, Object>();
         if (values != null) {
-            parameters.put("values", values);
+            parameters.put("value", values);
         }
         if (timeoutInSeconds > 0) {
             parameters.put("timeoutInSeconds", timeoutInSeconds);

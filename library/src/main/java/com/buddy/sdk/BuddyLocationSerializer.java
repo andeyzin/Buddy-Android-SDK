@@ -17,7 +17,7 @@ import java.util.Locale;
 public class BuddyLocationSerializer implements JsonSerializer<Location>{
 
 	public static String serializeCore(Location location) {
-		return String.format(Locale.US,"%s,%s",location.getLatitude(),location.getLongitude());
+		return String.format(Locale.US,"%f,%f",location.getLatitude(),location.getLongitude());
 	}
 
     @Override public JsonElement serialize(final Location location, final Type typeOfSrc, final JsonSerializationContext context) {
